@@ -118,7 +118,7 @@ public class Welcome extends FragmentActivity implements OnMapReadyCallback,
     private Handler handler;
     private LatLng startPosition, endPosition,currentPosition;
     private int index, next;
-//    private Button btnGo;
+    //    private Button btnGo;
     private PlaceAutocompleteFragment places;
     private String destination;
     private PolylineOptions polylineOptions, blackPolylineOptions;
@@ -248,7 +248,7 @@ public class Welcome extends FragmentActivity implements OnMapReadyCallback,
 //            }
 //        });
 
-        drivers = FirebaseDatabase.getInstance().getReference("Drivers");
+        drivers = FirebaseDatabase.getInstance().getReference(Common.driver_tbl);
         geoFire = new GeoFire(drivers);
 
         setUpLocation();
