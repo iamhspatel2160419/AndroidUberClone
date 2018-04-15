@@ -64,9 +64,11 @@ import com.google.android.gms.maps.model.SquareCap;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 import com.google.firebase.iid.FirebaseInstanceId;
 
 import org.json.JSONArray;
@@ -127,6 +129,9 @@ public class Welcome extends FragmentActivity implements OnMapReadyCallback,
     private Polyline blackPolyline, greyPolyline;
 
     private IGoogleAPI mService;
+
+    //Presense Systems
+    DatabaseReference onlineRef, currentUserRef;
 
     Runnable drawPathRunnable = new Runnable() {
         @Override
@@ -191,6 +196,26 @@ public class Welcome extends FragmentActivity implements OnMapReadyCallback,
                 .findFragmentById(R.id.map);
         mapFragment.getMapAsync(this);
 
+        //Presense System
+        onlineRef = FirebaseDatabase.getInstance().getReference().child(".info/connected");
+        currentUserRef = FirebaseDatabase.getInstance().getReference(Common.driver_tbl)
+                .child(FirebaseAuth.getInstance().getCurrentUser().getUid());
+        onlineRef.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                // we will remove value from driver tbl when driver disconnected
+                currentUserRef.onDisconnect().removeValue();
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+
+            }
+        });
+
+
+
+
         // Init View
 
         location_switch = (MaterialAnimatedSwitch) findViewById(R.id.localtion_switch);
@@ -198,15 +223,22 @@ public class Welcome extends FragmentActivity implements OnMapReadyCallback,
             @Override
             public void onClick(View view) {
                 if (((MaterialAnimatedSwitch) view).isChecked()) {
+
+                    FirebaseDatabase.getInstance().goOnline(); // set connected when switch to on
+
                     startLocationUpdates();
                     displayLocation();
                     Snackbar.make(mapFragment.getView(), "You are online", Snackbar.LENGTH_SHORT).show();
                 }
                 else{
+
+                    FirebaseDatabase.getInstance().goOffline(); // set disconnect when switch to offline
+
                     stopLocationUpdates();
                     mCurrent.remove();
                     mMap.clear();
-                    handler.removeCallbacks(drawPathRunnable);
+                    if(handler != null)
+                        handler.removeCallbacks(drawPathRunnable);
                     Snackbar.make(mapFragment.getView(), "You are offline", Snackbar.LENGTH_SHORT).show();
 
                 }
