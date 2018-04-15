@@ -6,24 +6,24 @@ package com.example.khean07.androiduberclone.Model;
 
 public class Sender {
 
-    public Data data;
+    public Notification notification;
     public String to;
 
     public Sender() {
 
     }
 
-    public Sender(Data data, String to) {
-        this.data = data;
+    public Sender(Notification notification, String to) {
+        this.notification = notification;
         this.to = to;
     }
 
-    public Data getData() {
-        return data;
+    public Notification getNotification() {
+        return notification;
     }
 
-    public void setData(Data data) {
-        this.data = data;
+    public void setNotification(Notification notification) {
+        this.notification = notification;
     }
 
     public String getTo() {

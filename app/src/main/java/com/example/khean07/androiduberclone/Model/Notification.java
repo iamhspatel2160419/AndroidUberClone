@@ -4,17 +4,17 @@ package com.example.khean07.androiduberclone.Model;
  * Created by Khean07 on 4/14/2018.
  */
 
-public class Data {
+public class Notification {
 
     public String title;
-    public String detail;
+    public String body;
 
-    public Data() {
+    public Notification() {
     }
 
-    public Data(String title, String detail) {
+    public Notification(String title, String body) {
         this.title = title;
-        this.detail = detail;
+        this.body = body;
     }
 
     public String getTitle() {
@@ -25,11 +25,11 @@ public class Data {
         this.title = title;
     }
 
-    public String getDetail() {
-        return detail;
+    public String getBody() {
+        return body;
     }
 
-    public void setDetail(String detail) {
-        this.detail = detail;
+    public void setBody(String body) {
+        this.body = body;
     }
 }

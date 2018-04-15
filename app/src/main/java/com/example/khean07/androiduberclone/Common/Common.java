@@ -1,5 +1,7 @@
 package com.example.khean07.androiduberclone.Common;
 
+import android.location.Location;
+
 import com.example.khean07.androiduberclone.Remote.FCMClient;
 import com.example.khean07.androiduberclone.Remote.IFCMService;
 import com.example.khean07.androiduberclone.Remote.IGoogleAPI;
@@ -16,6 +18,8 @@ public class Common {
     public static final String user_rider_tbl = "RidersInformation";
     public static final String pickup_request_tbl = "PickupRequest";
     public static final String token_tbl = "Tokens";
+
+    public static Location mLastLocation = null;
 
 
     public static final String baseUrl = "https://maps.googleapis.com";
