@@ -23,6 +23,8 @@ public class MyFirebaseMessaging extends FirebaseMessagingService {
         Intent intent = new Intent(getBaseContext(), CustommerCall.class);
         intent.putExtra("lat",customer_location.latitude);
         intent.putExtra("lng",customer_location.longitude);
+        intent.putExtra("customer",remoteMessage.getNotification().getTitle());
+
 //        getApplicationContext().startActivity(intent);
         //-- TODO error Calling startActivity() from outside of an Activity  context requires the FLAG_ACTIVITY_NEW_TASK flag. Is this really what you want?
         intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
